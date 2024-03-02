@@ -1,3 +1,57 @@
-[gd_scene format=3 uid="uid://dfa61l5vkj201"]
+[gd_scene load_steps=11 format=3 uid="uid://dfa61l5vkj201"]
+
+[ext_resource type="Texture2D" uid="uid://b88jlyrqeb1im" path="res://assets/ground/Ground037_1K-JPG_Color.jpg" id="1_3jv5k"]
+[ext_resource type="PackedScene" uid="uid://0ydagwahm1jb" path="res://scenes/player.tscn" id="1_ku48t"]
+[ext_resource type="Texture2D" uid="uid://h0mnyt6auq7e" path="res://assets/ground/Ground037_1K-JPG_NormalDX.jpg" id="2_ansma"]
+[ext_resource type="Texture2D" uid="uid://cg77r3lrcb635" path="res://assets/ground/Ground037_1K-JPG_Roughness.jpg" id="3_6os7q"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iquip"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_65wsx"]
+sky_material = SubResource("ProceduralSkyMaterial_iquip")
+
+[sub_resource type="Environment" id="Environment_hijqw"]
+background_mode = 2
+sky = SubResource("Sky_65wsx")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_btlyc"]
+albedo_texture = ExtResource("1_3jv5k")
+roughness_texture = ExtResource("3_6os7q")
+normal_enabled = true
+normal_texture = ExtResource("2_ansma")
+uv1_scale = Vector3(25, 25, 25)
+uv1_triplanar_sharpness = 0.406128
+uv1_world_triplanar = true
+texture_filter = 5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gh2oo"]
+material = SubResource("StandardMaterial3D_btlyc")
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ehed2"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
 
 [node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hijqw")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_gh2oo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ehed2")
+
+[node name="Player" parent="." instance=ExtResource("1_ku48t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.40177, 0)
+light_energy = 1.768
+light_indirect_energy = 1.97
