@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 const WALK_SPEED := 5.0
 const RUN_SPEED := 8.0
 const JUMP_VELOCITY := 4.5
@@ -35,7 +36,7 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir = Input.get_vector("to_left", "to_right", "to_front", "to_back")
-	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * speed
@@ -53,7 +54,7 @@ func _physics_process(delta):
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
-		head.rotate_y(-event.relative.x * SENSITIVITY)
+		rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 		
@@ -66,3 +67,4 @@ func head_bob(delta):
 	pos.x = cos(bob_t * BOB_FREQ / 2) * BOB_AMP
 	
 	camera.transform.origin = pos
+
