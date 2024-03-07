@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3vsvoow2xgxl"]
+
+[ext_resource type="PackedScene" uid="uid://bllnilyw27t1c" path="res://assets/foliage.glb" id="1_7h2yv"]
+[ext_resource type="PackedScene" uid="uid://cb8lxgqvw0eyh" path="res://assets/folliage.glb" id="2_sli2c"]
+[ext_resource type="PackedScene" uid="uid://2hqh8fojdl7e" path="res://assets/mouth.glb" id="3_5r2bl"]
+[ext_resource type="PackedScene" uid="uid://djw7u6e4fnurf" path="res://assets/foliage_f.glb" id="4_5386a"]
+
+[node name="MeshLib" type="Node3D"]
+
+[node name="foliage" parent="." instance=ExtResource("1_7h2yv")]
+
+[node name="folliage2" parent="." instance=ExtResource("2_sli2c")]
+
+[node name="mouth" parent="." instance=ExtResource("3_5r2bl")]
+
+[node name="foliage_f" parent="." instance=ExtResource("4_5386a")]

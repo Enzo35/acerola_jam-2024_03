@@ -30,5 +30,15 @@ Godot License
   -- Godot Engine <https://godotengine.org>
 
 Textures Licenses
+    
     Created using Ground 037 from ambientCG.com/a/Ground037,
+    licensed under the Creative Commons CC0 1.0 Universal License.
+
+    Created using Leaf Set 037 from ambientCG.com/a/LeafSet019,
+    licensed under the Creative Commons CC0 1.0 Universal License.
+
+    Created using Bark 014 037 from ambientCG.com/a/Bark014,
+    licensed under the Creative Commons CC0 1.0 Universal License.
+
+    Created using Foliage 003 from ambientCG.com/a/Foliage003,
     licensed under the Creative Commons CC0 1.0 Universal License.

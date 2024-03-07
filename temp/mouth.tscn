@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm5dv0uxbhj6n"]
+
+[ext_resource type="PackedScene" uid="uid://2hqh8fojdl7e" path="res://assets/mouth.glb" id="1_t15hh"]
+
+[node name="mouth" instance=ExtResource("1_t15hh")]

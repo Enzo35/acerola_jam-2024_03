@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1eews2h3uqci"]
+
+[ext_resource type="PackedScene" uid="uid://djw7u6e4fnurf" path="res://assets/foliage_f.glb" id="1_2m73e"]
+[ext_resource type="Texture2D" uid="uid://dn7n6ykg08lr2" path="res://assets/foliage_f_Foliage003_1K-PNG_Color-Foliage003_1K-PNG_Opacity.png" id="2_fib0w"]
+[ext_resource type="Texture2D" uid="uid://bpgxmduxmrfcr" path="res://assets/foliage_f_Foliage003_1K-PNG_Roughness.png" id="3_40nsq"]
+[ext_resource type="Texture2D" uid="uid://blucikoksqcbe" path="res://assets/foliage_f_Foliage003_1K-PNG_NormalDX.png" id="4_h0klq"]
+
+[sub_resource type="Shader" id="Shader_scm5p"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_nearest_mipmap,repeat_enable;
+uniform float alpha_scissor_threshold;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_nearest_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_g,filter_nearest_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform sampler2D texture_normal : hint_roughness_normal,filter_nearest_mipmap,repeat_enable;
+uniform float normal_scale : hint_range(-16,16);
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+	/*if (VERTEX.y < 0.0) {
+		VERTEX += vec3(0, sin(TIME * 0.5) * 0.1, 0);
+	}*/
+	VERTEX.xy += sin(TIME * length(VERTEX.y) * length(VERTEX.xz)) * 0.05;
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(0.0,1.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	NORMAL_MAP = texture(texture_normal,base_uv).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+	ALPHA *= albedo.a * albedo_tex.a;
+	ALPHA_SCISSOR_THRESHOLD = alpha_scissor_threshold;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjlen"]
+resource_name = "Material.001"
+render_priority = 0
+shader = SubResource("Shader_scm5p")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("2_fib0w")
+shader_parameter/texture_metallic = ExtResource("3_40nsq")
+shader_parameter/texture_roughness = ExtResource("3_40nsq")
+shader_parameter/texture_normal = ExtResource("4_h0klq")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1jbxb"]
+_surfaces = [{
+"aabb": AABB(-1, -0.866026, -2, 2, 1.73205, 2.00001),
+"format": 34896613377,
+"index_count": 18,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0, 4, 0, 7, 0, 5, 0, 4, 0, 6, 0, 7, 0, 8, 0, 11, 0, 9, 0, 8, 0, 10, 0, 11, 0),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray(0, 0, 255, 127, 254, 255, 0, 0, 255, 255, 255, 127, 254, 255, 0, 0, 0, 0, 255, 127, 0, 0, 0, 0, 255, 255, 255, 127, 0, 0, 0, 0, 255, 191, 255, 255, 254, 255, 0, 0, 255, 63, 0, 0, 254, 255, 0, 0, 255, 191, 254, 255, 0, 0, 0, 0, 255, 63, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 254, 255, 0, 0, 255, 63, 254, 255, 254, 255, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 255, 63, 254, 255, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_83drv"]
+resource_name = "foliage_f_Plane_002"
+_surfaces = [{
+"aabb": AABB(-1, -0.866026, -2, 2, 1.73205, 2.00001),
+"attribute_data": PackedByteArray(0, 0, 217, 204, 255, 255, 217, 204, 0, 0, 168, 36, 255, 255, 168, 36, 0, 0, 217, 204, 255, 255, 217, 204, 0, 0, 168, 36, 255, 255, 168, 36, 0, 0, 217, 204, 255, 255, 217, 204, 0, 0, 168, 36, 255, 255, 168, 36),
+"format": 34896613399,
+"index_count": 18,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0, 4, 0, 7, 0, 5, 0, 4, 0, 6, 0, 7, 0, 8, 0, 11, 0, 9, 0, 8, 0, 10, 0, 11, 0),
+"material": SubResource("ShaderMaterial_pjlen"),
+"name": "Material.001",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray(0, 0, 255, 127, 254, 255, 255, 191, 255, 255, 255, 127, 254, 255, 255, 191, 0, 0, 255, 127, 0, 0, 255, 191, 255, 255, 255, 127, 0, 0, 255, 191, 255, 191, 255, 255, 254, 255, 140, 226, 255, 63, 0, 0, 254, 255, 140, 226, 255, 191, 254, 255, 0, 0, 140, 226, 255, 63, 0, 0, 0, 0, 140, 226, 255, 191, 0, 0, 254, 255, 140, 226, 255, 63, 254, 255, 254, 255, 140, 226, 255, 191, 0, 0, 0, 0, 140, 226, 255, 63, 254, 255, 0, 0, 140, 226, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 171, 156, 85, 78, 171, 156, 85, 78, 171, 156, 85, 78, 171, 156, 85, 78, 85, 206, 82, 227, 85, 206, 82, 227, 85, 206, 82, 227, 85, 206, 82, 227)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_1jbxb")
+
+[node name="foliage_f" instance=ExtResource("1_2m73e")]
+
+[node name="Plane_002" parent="." index="0"]
+mesh = SubResource("ArrayMesh_83drv")
